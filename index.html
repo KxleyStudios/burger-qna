@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BURGER - QNA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Star animation container -->
+    <div id="starfield"></div>
+    
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="title">THE BURGER - QNA</h1>
+        
+        <div class="content">
+            <div class="submit-section">
+                <h2>Ask Your Question!</h2>
+                <form id="questionForm">
+                    <input type="text" id="username" placeholder="Your Name (optional)" maxlength="50">
+                    <textarea id="question" placeholder="What's your question?" required maxlength="500"></textarea>
+                    <button type="submit">Submit Question</button>
+                </form>
+            </div>
+            
+            <div class="questions-section">
+                <h2>Questions from the Community</h2>
+                <div id="questionsContainer">
+                    <div class="loading">Loading questions...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-firestore-compat.min.js"></script>
+    
+    <script src="configuration/firebase-config.js"></script>
+    <script src="animations/stars.js"></script>
+    <script src="application logic/app.js"></script>
+</body>
+</html>
