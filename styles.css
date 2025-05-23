@@ -76,13 +76,14 @@ body {
 }
 
 .title {
-    font-family: 'Gumball', cursive;
+    font-family: 'Gumball', 'Comic Sans MS', cursive;
     font-size: clamp(2.5rem, 8vw, 5rem);
     text-align: center;
     margin: 40px 0 60px 0;
     color: white;
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);
     letter-spacing: 2px;
+    font-weight: normal;
 }
 
 .content {

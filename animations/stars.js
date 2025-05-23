@@ -3,12 +3,13 @@ class StarField {
     constructor() {
         this.container = document.getElementById('starfield');
         this.stars = [];
-        this.maxStars = 15;
+        this.maxStars = 20;
         this.init();
     }
 
     init() {
-        this.createStars();
+        // Start creating stars immediately
+        this.createInitialStars();
         this.animate();
     }
 
@@ -16,28 +17,28 @@ class StarField {
         const star = document.createElement('div');
         star.className = 'star';
         
-        // Random size between 2px and 6px
-        const size = Math.random() * 4 + 2;
+        // Random size between 1px and 5px
+        const size = Math.random() * 4 + 1;
         star.style.width = size + 'px';
         star.style.height = size + 'px';
         
         // Random vertical position
         star.style.top = Math.random() * window.innerHeight + 'px';
         
-        // Start from left side
-        star.style.left = '-50px';
+        // Start from left side (off screen)
+        star.style.left = '-20px';
         
-        // Random animation duration between 2s and 4s
-        const duration = Math.random() * 2 + 2;
+        // Random animation duration between 2s and 5s
+        const duration = Math.random() * 3 + 2;
         star.style.animationDuration = duration + 's';
         
-        // Random delay to stagger stars
-        const delay = Math.random() * 2;
+        // Random delay to stagger stars (0 to 1 second)
+        const delay = Math.random() * 1;
         star.style.animationDelay = delay + 's';
         
-        // Add some sparkle effect
-        if (Math.random() > 0.7) {
-            star.style.boxShadow = `0 0 ${size * 2}px rgba(255, 255, 255, 0.8)`;
+        // Add some sparkle effect randomly
+        if (Math.random() > 0.6) {
+            star.style.boxShadow = `0 0 ${size * 3}px rgba(255, 255, 255, 0.8)`;
         }
         
         this.container.appendChild(star);
@@ -47,27 +48,28 @@ class StarField {
             if (star.parentNode) {
                 star.parentNode.removeChild(star);
             }
-        }, (duration + delay) * 1000);
+        }, (duration + delay) * 1000 + 500);
         
         return star;
     }
 
-    createStars() {
-        // Create initial batch of stars
+    createInitialStars() {
+        // Create stars with shorter delays initially
         for (let i = 0; i < this.maxStars; i++) {
             setTimeout(() => {
                 this.createStar();
-            }, i * 200);
+            }, i * 100);
         }
     }
 
     animate() {
         // Continuously create new stars
         setInterval(() => {
-            if (document.querySelectorAll('.star').length < this.maxStars * 2) {
+            const currentStars = document.querySelectorAll('.star').length;
+            if (currentStars < this.maxStars * 1.5) {
                 this.createStar();
             }
-        }, 300 + Math.random() * 200);
+        }, 200 + Math.random() * 300);
     }
 
     // Create shooting stars occasionally
@@ -75,14 +77,15 @@ class StarField {
         const star = document.createElement('div');
         star.className = 'star shooting-star';
         
-        const size = Math.random() * 3 + 4;
+        const size = Math.random() * 3 + 3;
         star.style.width = size + 'px';
         star.style.height = size + 'px';
-        star.style.top = Math.random() * (window.innerHeight * 0.6) + 'px';
-        star.style.left = '-50px';
+        star.style.top = Math.random() * (window.innerHeight * 0.7) + 'px';
+        star.style.left = '-30px';
         star.style.background = 'linear-gradient(45deg, #fff, #4ecdc4, #ff6b6b)';
-        star.style.boxShadow = `0 0 ${size * 3}px rgba(255, 255, 255, 0.9)`;
-        star.style.animationDuration = '1.5s';
+        star.style.boxShadow = `0 0 ${size * 4}px rgba(255, 255, 255, 0.9)`;
+        star.style.animationDuration = '1.2s';
+        star.style.borderRadius = '50%';
         
         this.container.appendChild(star);
         
@@ -90,33 +93,31 @@ class StarField {
             if (star.parentNode) {
                 star.parentNode.removeChild(star);
             }
-        }, 1500);
+        }, 1200);
     }
 
     startShootingStars() {
-        // Create shooting stars every 8-15 seconds
+        // Create shooting stars every 5-10 seconds
         setInterval(() => {
-            if (Math.random() > 0.3) {
+            if (Math.random() > 0.4) {
                 this.createShootingStar();
             }
-        }, 8000 + Math.random() * 7000);
+        }, 5000 + Math.random() * 5000);
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const starField = new StarField();
-    
-    // Start shooting stars after a delay
-    setTimeout(() => {
-        starField.startShootingStars();
-    }, 3000);
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        // Clear existing stars and restart
-        const stars = document.querySelectorAll('.star');
-        stars.forEach(star => star.remove());
-        starField.createStars();
-    });
+// Initialize immediately when script loads
+const starField = new StarField();
+
+// Start shooting stars after a delay
+setTimeout(() => {
+    starField.startShootingStars();
+}, 2000);
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    // Clear existing stars and restart
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => star.remove());
+    starField.createInitialStars();
 });
